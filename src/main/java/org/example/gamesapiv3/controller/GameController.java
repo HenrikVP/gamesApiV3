@@ -9,8 +9,46 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/games")
 public class GameController {
-     @GetMapping()
-    List<Game> getAllGames(){
+    @GetMapping()
+    List<Game> getAllGames() {
         return Data.games;
+    }
+
+    @GetMapping("/{id}")
+    Game getGameById(@PathVariable int id) {
+        Game gameFound = Data.games.stream()
+                .filter(game -> id == game.getId())
+                .findFirst()
+                .orElse(null);
+        return gameFound;
+    }
+
+    @PostMapping()
+    void createGame(@RequestBody Game game) {
+        Data.games.add(game);
+    }
+
+    @PutMapping()
+    boolean updateGameById(@RequestBody Game updGame) {
+        for (Game game : Data.games) {
+            if (updGame.getId() == game.getId()){
+                Data.games.set(Data.games.indexOf(game), updGame);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @DeleteMapping("/{id}")
+    boolean deleteGameById(@PathVariable int id) {
+        Game gameFound = Data.games.stream()
+                .filter(game -> id == game.getId())
+                .findFirst()
+                .orElse(null);
+        if (gameFound != null) {
+            Data.games.remove(gameFound);
+            return true;
+        }
+        return false;
     }
 }
