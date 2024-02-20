@@ -1,15 +1,13 @@
 package org.example.gamesapiv3.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Entity
+@Table
 public class Game {
     private final static AtomicInteger idGenerator =
             new AtomicInteger(0);
@@ -21,7 +19,7 @@ public class Game {
     @Column(nullable = false)
     private Category category;
 
-    public Game(){id = idGenerator.incrementAndGet(); }
+//    public Game(){id = idGenerator.incrementAndGet(); }
 
     public int getId() {return id; }
     public void setId(int id) { this.id = id; }
